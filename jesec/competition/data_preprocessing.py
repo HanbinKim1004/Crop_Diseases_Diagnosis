@@ -129,7 +129,7 @@ def strat_split_save(csv_file, save_folder, test_size=0.1, stratified='strat'):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Select Preprocess Mode')
     parser.add_argument('--task', type=str, required=True, choices=['train', 'test'], help='Select the task')
-    parser.add_argument('--data-folder', type=str, default='/data', help='Data folder path')
+    parser.add_argument('--data-folder', type=str, default='/content/Crop_Diseases_Diagnosis/data', help='Data folder path')
     parser.add_argument('--processed-csv', type=str, default='processed_train.csv', help='CSV file name to be saved')
     # parser.add_argument('--kfold-save-folder', type=str, default='kfold_dataset', help='kfold dataset folder in csv form')
     parser.add_argument('--stratified-save-folder', type=str, default='stratified_dataset', help='stratified dataset folrder in csv form')
