@@ -8,7 +8,7 @@ class BaseModel(nn.Module):
     def __init__(self, num_classes=1000, drop_p=0., pretrained=True):
         super().__init__()
         self.num_classes = num_classes
-        self.model = timm.create_model('resnetv2_50x3_bitm_in21k', pretrained=pretrained, num_classes=num_classes, drop_rate=drop_p,)
+        self.model = timm.create_model('nfnet_f4', pretrained=pretrained, num_classes=num_classes, drop_rate=drop_p,)
             
     @torch.cuda.amp.autocast()
     def forward(self, img):
