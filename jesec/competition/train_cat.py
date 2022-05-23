@@ -83,7 +83,7 @@ for k_fold, (train_csv, test_csv) in enumerate(zip(train_csv_files, test_csv_fil
     
     for leaf, learn, streng, border in tqdm(grids):
         model = CatBoostClassifier(
-            iterations = 1000000,
+            iterations = 1000,
             task_type = 'GPU',
             devices='0',
             thread_count = 16,
@@ -116,46 +116,46 @@ for k_fold, (train_csv, test_csv) in enumerate(zip(train_csv_files, test_csv_fil
         print(f'{target_label}--F1 Score:', f1_score_result, '\tAcc:', res, '\tBest F1 Score:', max(max_f1, f1_score_result), '\tBest Acc:', max(max_acc, res))
         
     ### from here, it was for grid search.
-        # if max_acc < res:
-        #     max_acc = res
-        #     # max_acc_leaf = leaf
-        #     # max_acc_learn = learn
-        #     # max_acc_streng = streng
-        #     # max_acc_border = border
-        #     model.save_model(os.path.join(save_folder, f'max_acc_{k_fold}.pkl'))
-        # if max_f1 < f1_score_result:
-        #     max_f1 = f1_score_result
-        #     # max_f1_leaf = leaf
-        #     # max_f1_learn = learn
-        #     # max_f1_streng = streng
-        #     # max_f1_border = border
-        #     model.save_model(os.path.join(save_folder, f'max_f1_{k_fold}.pkl'))
+        if max_acc < res:
+             max_acc = res
+             max_acc_leaf = leaf
+             max_acc_learn = learn
+             max_acc_streng = streng
+             max_acc_border = border
+             model.save_model(os.path.join(save_folder, f'max_acc_{k_fold}.pkl'))
+        if max_f1 < f1_score_result:
+             max_f1 = f1_score_result
+             max_f1_leaf = leaf
+             max_f1_learn = learn
+             max_f1_streng = streng
+             max_f1_border = border
+             model.save_model(os.path.join(save_folder, f'max_f1_{k_fold}.pkl'))
         
-    #     with open(f'catboost_{target_label}_log.txt', 'a', encoding='utf-8') as f:
-    #         f.write('-'*60)
-    #         f.write('\n')
-    #         f.write(f'leaf_estimation_iterations: {leaf}\t learn_rate: {learn}\t random_strength: {streng}\t border_count: {border}\n')
-    #         f.write(report)
-    #         f.write('\n')
-    #         f.write(f'F1_score: {f1_score_result}\tAcc: {res}\n')
-    #         f.write('-'*60)
+        with open(f'catboost_{target_label}_log.txt', 'a', encoding='utf-8') as f:
+             f.write('-'*60)
+             f.write('\n')
+             f.write(f'leaf_estimation_iterations: {leaf}\t learn_rate: {learn}\t random_strength: {streng}\t border_count: {border}\n')
+             f.write(report)
+             f.write('\n')
+             f.write(f'F1_score: {f1_score_result}\tAcc: {res}\n')
+             f.write('-'*60)
             
-    # with open(f'catboost_{target_label}_log.txt', 'a', encoding='utf-8') as f:
-    #         f.write('-'*60)
-    #         f.write('Result\n')
-    #         f.write(f'Max Acc: {max_acc}\n')
-    #         f.write(f'leaf_estimation_iterations: {max_acc_leaf}\t learn_rate: {max_acc_learn}\t random_strength: {max_acc_streng}\t border_count: {max_acc_border}\n')
-    #         f.write('-'*60)
-    #         f.write('Result\n')
-    #         f.write(f'Max F1: {max_f1}\n')
-    #         f.write(f'leaf_estimation_iterations: {max_f1_leaf}\t learn_rate: {max_f1_learn}\t random_strength: {max_f1_streng}\t border_count: {max_f1_border}\n')
+     with open(f'catboost_{target_label}_log.txt', 'a', encoding='utf-8') as f:
+             f.write('-'*60)
+             f.write('Result\n')
+             f.write(f'Max Acc: {max_acc}\n')
+             f.write(f'leaf_estimation_iterations: {max_acc_leaf}\t learn_rate: {max_acc_learn}\t random_strength: {max_acc_streng}\t border_count: {max_acc_border}\n')
+             f.write('-'*60)
+             f.write('Result\n')
+             f.write(f'Max F1: {max_f1}\n')
+             f.write(f'leaf_estimation_iterations: {max_f1_leaf}\t learn_rate: {max_f1_learn}\t random_strength: {max_f1_streng}\t border_count: {max_f1_border}\n')
             
         
     model.save_model(os.path.join(save_folder, f'{target_label}_{k_fold}.pkl'))
     # Here is to check feature importance
-    # importance = model.feature_importances_
-    # col_names = train_x.columns
-    # importance_with_name = [(impor, name) for name, impor in zip(col_names, importance)]
-    # for i in sorted(importance_with_name):
-    #    print(i)
-    #exit()
+    importance = model.feature_importances_
+    col_names = train_x.columns
+    importance_with_name = [(impor, name) for name, impor in zip(col_names, importance)]
+    for i in sorted(importance_with_name):
+        print(i)
+   exit()
