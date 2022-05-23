@@ -22,7 +22,7 @@ parser.add_argument('--disease-drop', type=float, default=0.3)
 parser.add_argument('--risk-drop', type=float, default=0.3)
 parser.add_argument('--learning-rate', type=float, default=0.00001)
 parser.add_argument('--weight-decay', type=float, default=0.01)
-parser.add_argument('--batch-size', type=int, default=10)
+parser.add_argument('--batch-size', type=int, default=8)
 parser.add_argument('--num-workers', type=int, default=4)
 parser.add_argument('--early-stop', type=int, default=250)
 
